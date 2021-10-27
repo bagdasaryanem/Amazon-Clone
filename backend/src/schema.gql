@@ -8,15 +8,57 @@ type Product {
   price: Float!
 }
 
+type User {
+  id: Int!
+  name: String
+  email: String!
+  role: UserRole!
+  password: String!
+}
+
+enum UserRole {
+  admin
+  customer
+}
+
+type JwtPayloadDto {
+  accessToken: String!
+}
+
 type Query {
   findAllProducts: [Product!]!
+  hello: String!
+  getUser(id: Float!): User!
+  getUsers: [User!]!
 }
 
 type Mutation {
   createProduct(createProductDto: createProductDto!): Product!
+  signUp(authCredentialsDto: AuthCredentialsDto!): JwtPayloadDto!
+  signIn(authCredentialsDto: AuthCredentialsDto!): JwtPayloadDto!
+  createUser(createUserDto: CreateUserDto!): User!
+  updateUser(updateUserDto: UpdateUserDto!): User!
+  deleteUser(id: Float!): User!
 }
 
 input createProductDto {
   name: String!
   price: Float!
+}
+
+input AuthCredentialsDto {
+  email: String!
+  password: String!
+  name: String
+}
+
+input CreateUserDto {
+  name: String!
+  email: String!
+}
+
+input UpdateUserDto {
+  id: Int!
+  name: String!
+  email: String!
 }
